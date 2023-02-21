@@ -1,0 +1,7 @@
+command = f"""curl \
+    -u 'api:aed0baa864334a0182ccef7de9834451' \
+    -H 'Content-Type: application/json' \
+    -d '{"source":"https://en.wikipedia.org/wiki/Timeline_of_the_near_future","landscape":false,"use_print":false}' \
+    https://api.pdfshift.io/v3/convert/pdf/ \
+    -o timeline-near-future.pdf
+"""
