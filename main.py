@@ -1,10 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
-
+import os
 
 def convert(url):
   response = requests.post('https://api.pdfshift.io/v3/convert/pdf',
-                           auth=('api', '9724191a06954ae3af421a8b3ec110eb'),
+                           auth=('api', '36f08769dc7145f5938dc776708d0b77'),
                            json={'source': url},
                            stream=True)
 
@@ -15,11 +15,13 @@ def convert(url):
     n = n+ b + u
     b = '_'
   name = f"pdf/{n}.pdf"
-  
-  print(name)
+  if os.path.isfile(name):
+    pass
+  else:
+   print(name)
   with open(name, 'wb') as output:
-    for chunk in response.iter_content(chunk_size=1024):
-      output.write(chunk)
+     for chunk in response.iter_content(chunk_size=1024):
+       output.write(chunk)
 
 
 # specify the URL of the website
