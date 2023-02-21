@@ -3,12 +3,6 @@ from bs4 import BeautifulSoup
 import os
 
 def convert(url):
-  response = requests.post('https://api.pdfshift.io/v3/convert/pdf',
-                           auth=('api', '36f08769dc7145f5938dc776708d0b77'),
-                           json={'source': url},
-                           stream=True)
-
-  response.raise_for_status()
   n = ""
   b = ""
   for u in url.split('/')[2:]:
@@ -16,12 +10,18 @@ def convert(url):
     b = '_'
   name = f"pdf/{n}.pdf"
   if os.path.isfile(name):
-    pass
+    print("E. "+name)
   else:
-   print(name)
-  with open(name, 'wb') as output:
-     for chunk in response.iter_content(chunk_size=1024):
-       output.write(chunk)
+    response = requests.post('https://api.pdfshift.io/v3/convert/pdf',
+                           auth=('api', '36f08769dc7145f5938dc776708d0b77'),
+                           json={'source': url},
+                           stream=True)
+
+    response.raise_for_status()
+    print(name)
+    with open(name, 'wb') as output:
+      for chunk in response.iter_content(chunk_size=1024):
+        output.write(chunk)
 
 
 # specify the URL of the website
